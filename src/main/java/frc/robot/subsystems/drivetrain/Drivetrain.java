@@ -7,8 +7,6 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.ADIS16470_IMU;
-import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.utils.Constants.DriveConstants;
@@ -16,40 +14,42 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.studica.frc.AHRS;
+import com.studica.frc.AHRS.NavXComType;
 
 public class Drivetrain extends SubsystemBase {
   // Create Swerve Modules
   private final Module m_frontLeft = new Module(
-      DriveConstants.kFrontLeftDrivingCanId,
-      DriveConstants.kFrontLeftTurningCanId,
+      DriveConstants.frontLeftDrivingCanId,
+      DriveConstants.frontLeftTurningCanId,
       DriveConstants.kFrontLeftEncoderPort,
-      DriveConstants.kFrontLeftChassisAngularOffset);
+      DriveConstants.frontLeftChassisAngularOffset);
 
   private final Module m_frontRight = new Module(
-      DriveConstants.kFrontRightDrivingCanId,
-      DriveConstants.kFrontRightTurningCanId,
+      DriveConstants.frontRightDrivingCanId,
+      DriveConstants.frontRightTurningCanId,
       DriveConstants.kFrontRightEncoderPort,
-      DriveConstants.kFrontRightChassisAngularOffset);
+      DriveConstants.frontRightChassisAngularOffset);
 
   private final Module m_rearLeft = new Module(
-      DriveConstants.kRearLeftDrivingCanId,
-      DriveConstants.kRearLeftTurningCanId,
+      DriveConstants.rearLeftDrivingCanId,
+      DriveConstants.rearLeftTurningCanId,
       DriveConstants.kBackLeftEncoderPort,
-      DriveConstants.kBackLeftChassisAngularOffset);
+      DriveConstants.backLeftChassisAngularOffset);
 
   private final Module m_rearRight = new Module(
-      DriveConstants.kRearRightDrivingCanId,
-      DriveConstants.kRearRightTurningCanId,
+      DriveConstants.rearRightDrivingCanId,
+      DriveConstants.rearRightTurningCanId,
       DriveConstants.kBackRightEncoderPort,
-      DriveConstants.kBackRightChassisAngularOffset);
+      DriveConstants.backRightChassisAngularOffset);
 
   // The gyro sensor
-  private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
+  private final AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
 
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
       DriveConstants.kDriveKinematics,
-      Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)),
+      Rotation2d.fromDegrees(gyro.getAngle()),
       new SwerveModulePosition[] {
           m_frontLeft.getPosition(),
           m_frontRight.getPosition(),
@@ -106,7 +106,7 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     m_odometry.update(
-        Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)),
+        Rotation2d.fromDegrees(gyro.getAngle()),
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),
             m_frontRight.getPosition(),
@@ -121,7 +121,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void resetOdometry(Pose2d pose) {
     m_odometry.resetPosition(
-        Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)),
+        Rotation2d.fromDegrees(gyro.getAngle()),
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),
             m_frontRight.getPosition(),
@@ -132,17 +132,17 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
-    double xSpeedDelivered = xSpeed * DriveConstants.kMaxSpeedMetersPerSecond;
-    double ySpeedDelivered = ySpeed * DriveConstants.kMaxSpeedMetersPerSecond;
-    double rotDelivered = rot * DriveConstants.kMaxAngularSpeed;
+    double xSpeedDelivered = xSpeed * DriveConstants.maxSpeedMetersPerSecond;
+    double ySpeedDelivered = ySpeed * DriveConstants.maxSpeedMetersPerSecond;
+    double rotDelivered = rot * DriveConstants.maxAngularSpeed;
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
             ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered,
-                Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)))
+                Rotation2d.fromDegrees(gyro.getAngle()))
             : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
     SwerveDriveKinematics.desaturateWheelSpeeds(
-        swerveModuleStates, DriveConstants.kMaxSpeedMetersPerSecond);
+        swerveModuleStates, DriveConstants.maxSpeedMetersPerSecond);
     m_frontLeft.setDesiredState(swerveModuleStates[0]);
     m_frontRight.setDesiredState(swerveModuleStates[1]);
     m_rearLeft.setDesiredState(swerveModuleStates[2]);
@@ -158,7 +158,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void setModuleStates(SwerveModuleState[] desiredStates) {
     SwerveDriveKinematics.desaturateWheelSpeeds(
-        desiredStates, DriveConstants.kMaxSpeedMetersPerSecond);
+        desiredStates, DriveConstants.maxSpeedMetersPerSecond);
     m_frontLeft.setDesiredState(desiredStates[0]);
     m_frontRight.setDesiredState(desiredStates[1]);
     m_rearLeft.setDesiredState(desiredStates[2]);
@@ -173,14 +173,14 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void zeroHeading() {
-    m_gyro.reset();
+    gyro.reset();
   }
 
   public double getHeading() {
-    return Rotation2d.fromDegrees(m_gyro.getAngle(IMUAxis.kZ)).getDegrees();
+    return Rotation2d.fromDegrees(gyro.getAngle()).getDegrees();
   }
 
   public double getTurnRate() {
-    return m_gyro.getRate(IMUAxis.kZ) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+    return gyro.getRate() * (DriveConstants.gyroReversed ? -1.0 : 1.0);
   }
 }
