@@ -18,25 +18,29 @@ import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 public class Drivetrain extends SubsystemBase {
-  // Create MAXSwerveModules
+  // Create Swerve Modules
   private final Module m_frontLeft = new Module(
       DriveConstants.kFrontLeftDrivingCanId,
       DriveConstants.kFrontLeftTurningCanId,
+      DriveConstants.kFrontLeftEncoderPort,
       DriveConstants.kFrontLeftChassisAngularOffset);
 
   private final Module m_frontRight = new Module(
       DriveConstants.kFrontRightDrivingCanId,
       DriveConstants.kFrontRightTurningCanId,
+      DriveConstants.kFrontRightEncoderPort,
       DriveConstants.kFrontRightChassisAngularOffset);
 
   private final Module m_rearLeft = new Module(
       DriveConstants.kRearLeftDrivingCanId,
       DriveConstants.kRearLeftTurningCanId,
+      DriveConstants.kBackLeftEncoderPort,
       DriveConstants.kBackLeftChassisAngularOffset);
 
   private final Module m_rearRight = new Module(
       DriveConstants.kRearRightDrivingCanId,
       DriveConstants.kRearRightTurningCanId,
+      DriveConstants.kBackRightEncoderPort,
       DriveConstants.kBackRightChassisAngularOffset);
 
   // The gyro sensor
