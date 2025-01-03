@@ -52,12 +52,11 @@ public class Drivetrain extends SubsystemBase {
           m_rearRight.getPosition()
       });
 
-  /** Creates a new DriveSubsystem. */
   public Drivetrain() {
     configurePathPlanner();
   }
 
-    private void configurePathPlanner() {
+  private void configurePathPlanner() {
     AutoBuilder.configureHolonomic(
         this::getPose, 
         this::resetOdometry, 
