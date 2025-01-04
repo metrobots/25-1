@@ -105,6 +105,7 @@ public class Module {
    */
   public void setDesiredState(SwerveModuleState desiredState) {
     // Optimize the reference state to avoid spinning further than 90 degrees
+    @SuppressWarnings("deprecation")
     SwerveModuleState optimizedState = SwerveModuleState.optimize(desiredState, 
         new Rotation2d(getAbsoluteEncoder()));
 
