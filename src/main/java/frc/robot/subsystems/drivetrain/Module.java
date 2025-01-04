@@ -3,7 +3,7 @@ package frc.robot.subsystems.drivetrain;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import frc.robot.utils.Configs;
+import frc.robot.utils.Config;
 
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
@@ -51,9 +51,9 @@ public class Module {
     turningClosedLoopController = turningSpark.getClosedLoopController();
 
     //Apply configurations to the SPARKs
-    drivingSpark.configure(Configs.MK4iSwerveModule.drivingConfig, ResetMode.kResetSafeParameters,
+    drivingSpark.configure(Config.MK4iSwerveModule.drivingConfig, ResetMode.kResetSafeParameters,
         PersistMode.kPersistParameters);
-    turningSpark.configure(Configs.MK4iSwerveModule.turningConfig, ResetMode.kResetSafeParameters,
+    turningSpark.configure(Config.MK4iSwerveModule.turningConfig, ResetMode.kResetSafeParameters,
         PersistMode.kPersistParameters);
 
     chassisAngularOffset = cAngularOffset;
