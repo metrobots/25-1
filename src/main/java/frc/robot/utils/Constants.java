@@ -49,8 +49,8 @@ public final class Constants {
 
   public static final class ModuleConstants {
     //MK4i Configuration - L3 Gear Ratio
-    public static final double wheelDiameterMeters = 0.10033; // MK4i wheel diameter
-    public static final double drivingMotorReduction = 6.12; // L3 ratio
+    public static final double wheelDiameterMeters = 0.10033; //MK4i wheel diameter
+    public static final double drivingMotorReduction = 6.12; //L3 ratio
     
     //Calculations required for driving motor conversion factors and feed forward
     public static final double drivingMotorFreeSpeedRps = NeoMotorConstants.freeSpeedRpm / 60;

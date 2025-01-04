@@ -28,15 +28,15 @@ public class Module {
   private final SparkClosedLoopController drivingClosedLoopController;
   private final SparkClosedLoopController turningClosedLoopController;
 
-  private double m_chassisAngularOffset = 0;
-  private SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d());
+  private double chassisAngularOffset = 0;
+  private SwerveModuleState desiredState = new SwerveModuleState(0.0, new Rotation2d());
 
   /**
    * Constructs a MK4i Swerve Module and configures the driving and turning motor,
    * encoder, and PID controller. This version is configured for L3 gear ratio and
    * Thrifty encoders.
    */
-  public Module(int drivingCANId, int turningCANId, int encoderChannel, double chassisAngularOffset) {
+  public Module(int drivingCANId, int turningCANId, int encoderChannel, double cAngularOffset) {
     drivingSpark = new SparkMax(drivingCANId, MotorType.kBrushless);
     turningSpark = new SparkMax(turningCANId, MotorType.kBrushless);
 
@@ -56,8 +56,8 @@ public class Module {
     turningSpark.configure(Configs.MK4iSwerveModule.turningConfig, ResetMode.kResetSafeParameters,
         PersistMode.kPersistParameters);
 
-    m_chassisAngularOffset = chassisAngularOffset;
-    m_desiredState.angle = new Rotation2d(getAbsoluteEncoder());
+    chassisAngularOffset = cAngularOffset;
+    desiredState.angle = new Rotation2d(getAbsoluteEncoder());
     drivingEncoder.setPosition(0);
   }
 
@@ -66,7 +66,7 @@ public class Module {
    */
   private double getAbsoluteEncoder() {
     double angle = dutyCycleEncoder.getOutput() * 2.0 * Math.PI;
-    angle -= m_chassisAngularOffset;
+    angle -= chassisAngularOffset;
     return angle;
   }
 
@@ -116,7 +116,7 @@ public class Module {
         ControlType.kPosition
     );
 
-    m_desiredState = optimizedState;
+    desiredState = optimizedState;
   }
 
   /** Zeroes all the SwerveModule encoders. */

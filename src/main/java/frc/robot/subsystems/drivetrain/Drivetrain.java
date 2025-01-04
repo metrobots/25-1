@@ -18,7 +18,7 @@ import com.studica.frc.AHRS;
 import com.studica.frc.AHRS.NavXComType;
 
 public class Drivetrain extends SubsystemBase {
-  // Create Swerve Modules
+  //Create Swerve Modules
   private final Module frontLeft = new Module(
       DriveConstants.frontLeftDrivingCanId,
       DriveConstants.frontLeftTurningCanId,
@@ -43,11 +43,11 @@ public class Drivetrain extends SubsystemBase {
       DriveConstants.backRightEncoderPort,
       DriveConstants.backRightChassisAngularOffset);
 
-  // The gyro sensor
+  //The gyro sensor
   private final AHRS gyro = new AHRS(NavXComType.kMXP_SPI);
 
-  // Odometry class for tracking robot pose
-  SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
+  //Odometry class for tracking robot pose
+  SwerveDriveOdometry odometry = new SwerveDriveOdometry(
       DriveConstants.kDriveKinematics,
       Rotation2d.fromDegrees(gyro.getAngle()),
       new SwerveModulePosition[] {
@@ -58,7 +58,7 @@ public class Drivetrain extends SubsystemBase {
       });
 
   public Drivetrain() {
-    // Load the RobotConfig from the GUI settings
+    //Load the RobotConfig from the GUI settings
     RobotConfig config;
     try {
       config = RobotConfig.fromGUISettings();
@@ -105,7 +105,7 @@ public class Drivetrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    m_odometry.update(
+    odometry.update(
         Rotation2d.fromDegrees(gyro.getAngle()),
         new SwerveModulePosition[] {
             frontLeft.getPosition(),
@@ -116,11 +116,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public Pose2d getPose() {
-    return m_odometry.getPoseMeters();
+    return odometry.getPoseMeters();
   }
 
   public void resetOdometry(Pose2d pose) {
-    m_odometry.resetPosition(
+    odometry.resetPosition(
         Rotation2d.fromDegrees(gyro.getAngle()),
         new SwerveModulePosition[] {
             frontLeft.getPosition(),
