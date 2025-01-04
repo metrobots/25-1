@@ -19,28 +19,28 @@ import com.studica.frc.AHRS.NavXComType;
 
 public class Drivetrain extends SubsystemBase {
   // Create Swerve Modules
-  private final Module m_frontLeft = new Module(
+  private final Module frontLeft = new Module(
       DriveConstants.frontLeftDrivingCanId,
       DriveConstants.frontLeftTurningCanId,
-      DriveConstants.kFrontLeftEncoderPort,
+      DriveConstants.frontLeftEncoderPort,
       DriveConstants.frontLeftChassisAngularOffset);
 
-  private final Module m_frontRight = new Module(
+  private final Module frontRight = new Module(
       DriveConstants.frontRightDrivingCanId,
       DriveConstants.frontRightTurningCanId,
-      DriveConstants.kFrontRightEncoderPort,
+      DriveConstants.frontRightEncoderPort,
       DriveConstants.frontRightChassisAngularOffset);
 
-  private final Module m_rearLeft = new Module(
+  private final Module rearLeft = new Module(
       DriveConstants.rearLeftDrivingCanId,
       DriveConstants.rearLeftTurningCanId,
-      DriveConstants.kBackLeftEncoderPort,
+      DriveConstants.backLeftEncoderPort,
       DriveConstants.backLeftChassisAngularOffset);
 
-  private final Module m_rearRight = new Module(
+  private final Module rearRight = new Module(
       DriveConstants.rearRightDrivingCanId,
       DriveConstants.rearRightTurningCanId,
-      DriveConstants.kBackRightEncoderPort,
+      DriveConstants.backRightEncoderPort,
       DriveConstants.backRightChassisAngularOffset);
 
   // The gyro sensor
@@ -51,10 +51,10 @@ public class Drivetrain extends SubsystemBase {
       DriveConstants.kDriveKinematics,
       Rotation2d.fromDegrees(gyro.getAngle()),
       new SwerveModulePosition[] {
-          m_frontLeft.getPosition(),
-          m_frontRight.getPosition(),
-          m_rearLeft.getPosition(),
-          m_rearRight.getPosition()
+          frontLeft.getPosition(),
+          frontRight.getPosition(),
+          rearLeft.getPosition(),
+          rearRight.getPosition()
       });
 
   public Drivetrain() {
@@ -92,10 +92,10 @@ public class Drivetrain extends SubsystemBase {
 
   private ChassisSpeeds getRobotRelativeSpeeds() {
     return DriveConstants.kDriveKinematics.toChassisSpeeds(
-        m_frontLeft.getState(),
-        m_frontRight.getState(),
-        m_rearLeft.getState(),
-        m_rearRight.getState());
+        frontLeft.getState(),
+        frontRight.getState(),
+        rearLeft.getState(),
+        rearRight.getState());
   }
 
   private void driveRobotRelative(ChassisSpeeds chassisSpeeds) {
@@ -108,10 +108,10 @@ public class Drivetrain extends SubsystemBase {
     m_odometry.update(
         Rotation2d.fromDegrees(gyro.getAngle()),
         new SwerveModulePosition[] {
-            m_frontLeft.getPosition(),
-            m_frontRight.getPosition(),
-            m_rearLeft.getPosition(),
-            m_rearRight.getPosition()
+            frontLeft.getPosition(),
+            frontRight.getPosition(),
+            rearLeft.getPosition(),
+            rearRight.getPosition()
         });
   }
 
@@ -123,10 +123,10 @@ public class Drivetrain extends SubsystemBase {
     m_odometry.resetPosition(
         Rotation2d.fromDegrees(gyro.getAngle()),
         new SwerveModulePosition[] {
-            m_frontLeft.getPosition(),
-            m_frontRight.getPosition(),
-            m_rearLeft.getPosition(),
-            m_rearRight.getPosition()
+            frontLeft.getPosition(),
+            frontRight.getPosition(),
+            rearLeft.getPosition(),
+            rearRight.getPosition()
         },
         pose);
   }
@@ -143,33 +143,33 @@ public class Drivetrain extends SubsystemBase {
             : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
     SwerveDriveKinematics.desaturateWheelSpeeds(
         swerveModuleStates, DriveConstants.maxSpeedMetersPerSecond);
-    m_frontLeft.setDesiredState(swerveModuleStates[0]);
-    m_frontRight.setDesiredState(swerveModuleStates[1]);
-    m_rearLeft.setDesiredState(swerveModuleStates[2]);
-    m_rearRight.setDesiredState(swerveModuleStates[3]);
+    frontLeft.setDesiredState(swerveModuleStates[0]);
+    frontRight.setDesiredState(swerveModuleStates[1]);
+    rearLeft.setDesiredState(swerveModuleStates[2]);
+    rearRight.setDesiredState(swerveModuleStates[3]);
   }
 
   public void setX() {
-    m_frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
-    m_frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
-    m_rearLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
-    m_rearRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+    frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+    frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
+    rearLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
+    rearRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
   }
 
   public void setModuleStates(SwerveModuleState[] desiredStates) {
     SwerveDriveKinematics.desaturateWheelSpeeds(
         desiredStates, DriveConstants.maxSpeedMetersPerSecond);
-    m_frontLeft.setDesiredState(desiredStates[0]);
-    m_frontRight.setDesiredState(desiredStates[1]);
-    m_rearLeft.setDesiredState(desiredStates[2]);
-    m_rearRight.setDesiredState(desiredStates[3]);
+    frontLeft.setDesiredState(desiredStates[0]);
+    frontRight.setDesiredState(desiredStates[1]);
+    rearLeft.setDesiredState(desiredStates[2]);
+    rearRight.setDesiredState(desiredStates[3]);
   }
 
   public void resetEncoders() {
-    m_frontLeft.resetEncoders();
-    m_rearLeft.resetEncoders();
-    m_frontRight.resetEncoders();
-    m_rearRight.resetEncoders();
+    frontLeft.resetEncoders();
+    rearLeft.resetEncoders();
+    frontRight.resetEncoders();
+    rearRight.resetEncoders();
   }
 
   public void zeroHeading() {

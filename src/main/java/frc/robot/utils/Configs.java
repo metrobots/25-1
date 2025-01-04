@@ -11,14 +11,14 @@ public final class Configs {
 
         static {
             // L3 MK4i Constants
-            final double kDrivingMotorReduction = 6.12; // L3 drive reduction
-            final double kWheelDiameterMeters = 0.10033;
-            final double kDriveWheelFreeSpeedRps = 5676.0 / 60.0 / kDrivingMotorReduction; // NEO free speed / reduction
+            final double drivingMotorReduction = 6.12; // L3 drive reduction
+            final double wheelDiameterMeters = 0.10033;
+            final double driveWheelFreeSpeedRps = 5676.0 / 60.0 / drivingMotorReduction; // NEO free speed / reduction
 
             // Calculate conversion factors
-            double drivingFactor = kWheelDiameterMeters * Math.PI / kDrivingMotorReduction;
-            double drivingVelocityFeedForward = 1.0 / (kDriveWheelFreeSpeedRps * 
-                kWheelDiameterMeters * Math.PI);
+            double drivingFactor = wheelDiameterMeters * Math.PI / drivingMotorReduction;
+            double drivingVelocityFeedForward = 1.0 / (driveWheelFreeSpeedRps * 
+                wheelDiameterMeters * Math.PI);
 
             // Driving motor configuration
             drivingConfig
