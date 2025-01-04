@@ -6,11 +6,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.utils.Constants.OIConstants;
+import frc.robot.utils.ControllerKit;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import com.pathplanner.lib.auto.AutoBuilder;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -21,14 +21,14 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 public class RobotContainer {
     private final SendableChooser<Command> autoChooser;
 
-  // The robot's subsystems
+  //The robot's subsystems
   private final Drivetrain drivetrain = new Drivetrain();
 
   //Make sure to add namedcommands to pathplanner here smthn like this ↓
   //NamedCommands.registerCommand("autoBalance", swerve.autoBalanceCommand());
 
-  // The driver's controller
-  CommandXboxController primary = new CommandXboxController(OIConstants.primaryPort);
+  //The driver's controller
+  ControllerKit primary = new ControllerKit(OIConstants.primaryPort);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -38,13 +38,13 @@ public class RobotContainer {
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
-    // Configure the button bindings
+    //Configure the button bindings
     configureButtonBindings();
 
-    // Configure default commands
+    //Configure default commands
     drivetrain.setDefaultCommand(
-        // The left stick controls translation of the robot.
-        // Turning is controlled by the X axis of the right stick.
+        //The left stick controls translation of the robot.
+        //Turning is controlled by the X axis of the right stick.
         new RunCommand(
             () -> drivetrain.drive(
                 -MathUtil.applyDeadband(primary.getLeftY(), OIConstants.driveDeadband),
