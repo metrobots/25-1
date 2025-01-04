@@ -69,7 +69,7 @@ public final class Constants {
 
   public static final class OIConstants {
     public static final int primaryPort = 0;
-    public static final int secondaryPort = 1; //Do we even need a secondary? Who knowsd
+    public static final int secondaryPort = 1; //Do we even need a secondary? Who knows
     public static final double driveDeadband = 0.05;
   }
 
