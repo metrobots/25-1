@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.subsystems.drivetrain;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -20,17 +16,17 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycle;
 
 public class Module {
-  private final SparkMax m_drivingSpark;
-  private final SparkMax m_turningSpark;
+  private final SparkMax drivingSpark;
+  private final SparkMax turningSpark;
 
-  private final RelativeEncoder m_drivingEncoder;
+  private final RelativeEncoder drivingEncoder;
   
-  // Thrifty encoder setup
-  private final DigitalInput m_encoderInput;
-  private final DutyCycle m_dutyCycleEncoder;
+  //Thrifty encoder setup
+  private final DigitalInput encoderInput;
+  private final DutyCycle dutyCycleEncoder;
   
-  private final SparkClosedLoopController m_drivingClosedLoopController;
-  private final SparkClosedLoopController m_turningClosedLoopController;
+  private final SparkClosedLoopController drivingClosedLoopController;
+  private final SparkClosedLoopController turningClosedLoopController;
 
   private double m_chassisAngularOffset = 0;
   private SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d());
@@ -41,35 +37,35 @@ public class Module {
    * Thrifty encoders.
    */
   public Module(int drivingCANId, int turningCANId, int encoderChannel, double chassisAngularOffset) {
-    m_drivingSpark = new SparkMax(drivingCANId, MotorType.kBrushless);
-    m_turningSpark = new SparkMax(turningCANId, MotorType.kBrushless);
+    drivingSpark = new SparkMax(drivingCANId, MotorType.kBrushless);
+    turningSpark = new SparkMax(turningCANId, MotorType.kBrushless);
 
-    // Configure driving motor and encoder
-    m_drivingEncoder = m_drivingSpark.getEncoder();
+    //Configure driving motor and encoder
+    drivingEncoder = drivingSpark.getEncoder();
     
-    // Configure Thrifty encoder for absolute position
-    m_encoderInput = new DigitalInput(encoderChannel);
-    m_dutyCycleEncoder = new DutyCycle(m_encoderInput);
+    //Configure Thrifty encoder for absolute position
+    encoderInput = new DigitalInput(encoderChannel);
+    dutyCycleEncoder = new DutyCycle(encoderInput);
 
-    m_drivingClosedLoopController = m_drivingSpark.getClosedLoopController();
-    m_turningClosedLoopController = m_turningSpark.getClosedLoopController();
+    drivingClosedLoopController = drivingSpark.getClosedLoopController();
+    turningClosedLoopController = turningSpark.getClosedLoopController();
 
-    // Apply configurations to the SPARKs
-    m_drivingSpark.configure(Configs.MK4iSwerveModule.drivingConfig, ResetMode.kResetSafeParameters,
+    //Apply configurations to the SPARKs
+    drivingSpark.configure(Configs.MK4iSwerveModule.drivingConfig, ResetMode.kResetSafeParameters,
         PersistMode.kPersistParameters);
-    m_turningSpark.configure(Configs.MK4iSwerveModule.turningConfig, ResetMode.kResetSafeParameters,
+    turningSpark.configure(Configs.MK4iSwerveModule.turningConfig, ResetMode.kResetSafeParameters,
         PersistMode.kPersistParameters);
 
     m_chassisAngularOffset = chassisAngularOffset;
     m_desiredState.angle = new Rotation2d(getAbsoluteEncoder());
-    m_drivingEncoder.setPosition(0);
+    drivingEncoder.setPosition(0);
   }
 
   /**
    * Gets the absolute encoder angle in radians from the Thrifty encoder
    */
   private double getAbsoluteEncoder() {
-    double angle = m_dutyCycleEncoder.getOutput() * 2.0 * Math.PI;
+    double angle = dutyCycleEncoder.getOutput() * 2.0 * Math.PI;
     angle -= m_chassisAngularOffset;
     return angle;
   }
@@ -81,7 +77,7 @@ public class Module {
    */
   public SwerveModuleState getState() {
     return new SwerveModuleState(
-        m_drivingEncoder.getVelocity(),
+        drivingEncoder.getVelocity(),
         new Rotation2d(getAbsoluteEncoder())
     );
   }
@@ -93,7 +89,7 @@ public class Module {
    */
   public SwerveModulePosition getPosition() {
     return new SwerveModulePosition(
-        m_drivingEncoder.getPosition(),
+        drivingEncoder.getPosition(),
         new Rotation2d(getAbsoluteEncoder())
     );
   }
@@ -104,18 +100,18 @@ public class Module {
    * @param desiredState Desired state with speed and angle.
    */
   public void setDesiredState(SwerveModuleState desiredState) {
-    // Optimize the reference state to avoid spinning further than 90 degrees
+    //Optimize the reference state to avoid spinning further than 90 degrees
     @SuppressWarnings("deprecation")
     SwerveModuleState optimizedState = SwerveModuleState.optimize(desiredState, 
         new Rotation2d(getAbsoluteEncoder()));
 
-    // Command driving and turning motors
-    m_drivingClosedLoopController.setReference(
+    //Command driving and turning motors
+    drivingClosedLoopController.setReference(
         optimizedState.speedMetersPerSecond, 
         ControlType.kVelocity
     );
     
-    m_turningClosedLoopController.setReference(
+    turningClosedLoopController.setReference(
         optimizedState.angle.getRadians(), 
         ControlType.kPosition
     );
@@ -125,6 +121,6 @@ public class Module {
 
   /** Zeroes all the SwerveModule encoders. */
   public void resetEncoders() {
-    m_drivingEncoder.setPosition(0);
+    drivingEncoder.setPosition(0);
   }
 }

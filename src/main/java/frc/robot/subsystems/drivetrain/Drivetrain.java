@@ -67,26 +67,26 @@ public class Drivetrain extends SubsystemBase {
       return;
     }
 
-    // Configure AutoBuilder last
+    //Configure AutoBuilder last
     AutoBuilder.configure(
-        this::getPose, // Robot pose supplier
-        this::resetOdometry, // Method to reset odometry
-        this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-        (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+        this::getPose, //Robot pose supplier
+        this::resetOdometry, //Method to reset odometry
+        this::getRobotRelativeSpeeds, //ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+        (speeds, feedforwards) -> driveRobotRelative(speeds), //Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
         new PPHolonomicDriveController(
-            new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-            new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
+            new PIDConstants(5.0, 0.0, 0.0), //Translation PID constants
+            new PIDConstants(5.0, 0.0, 0.0) //Rotation PID constants
         ),
-        config, // The robot configuration
+        config, //The robot configuration
         () -> {
-          // Boolean supplier that controls when the path will be mirrored for the red alliance
+          //Boolean supplier that controls when the path will be mirrored for the red alliance
           var alliance = DriverStation.getAlliance();
           if (alliance.isPresent()) {
             return alliance.get() == DriverStation.Alliance.Red;
           }
           return false;
         },
-        this // Reference to this subsystem to set requirements
+        this //Reference to this subsystem to set requirements
     );
   }
 
@@ -131,6 +131,11 @@ public class Drivetrain extends SubsystemBase {
         pose);
   }
 
+    /**
+     * The main drive method for the robot. Use this anytime you want to make the robot rotate,
+     * translate, or any combination of the two.
+     * @param
+   */
   public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
     double xSpeedDelivered = xSpeed * DriveConstants.maxSpeedMetersPerSecond;
     double ySpeedDelivered = ySpeed * DriveConstants.maxSpeedMetersPerSecond;
@@ -149,6 +154,9 @@ public class Drivetrain extends SubsystemBase {
     rearRight.setDesiredState(swerveModuleStates[3]);
   }
 
+    /**
+     * Set the swerve drivetrain wheels into an X formation
+   */
   public void setX() {
     frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
     frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
@@ -172,10 +180,18 @@ public class Drivetrain extends SubsystemBase {
     rearRight.resetEncoders();
   }
 
+    /**
+     * Resets the NavX to 0 position
+   */
   public void zeroHeading() {
     gyro.reset();
   }
 
+    /**
+     * Method to get the current heading from the gyro as a Double
+     * @return The current heading (in degrees)
+     * 
+   */
   public double getHeading() {
     return Rotation2d.fromDegrees(gyro.getAngle()).getDegrees();
   }
