@@ -4,6 +4,8 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import frc.robot.utils.Constants.ModuleConstants;
+
 public final class Configs {
     public static final class MK4iSwerveModule {
         public static final SparkMaxConfig drivingConfig = new SparkMaxConfig();
@@ -11,9 +13,9 @@ public final class Configs {
 
         static {
             // L3 MK4i Constants
-            final double drivingMotorReduction = 6.12; // L3 drive reduction
-            final double wheelDiameterMeters = 0.10033;
-            final double driveWheelFreeSpeedRps = 5676.0 / 60.0 / drivingMotorReduction; // NEO free speed / reduction
+            final double drivingMotorReduction = ModuleConstants.drivingMotorReduction; // L3 drive reduction
+            final double wheelDiameterMeters = ModuleConstants.wheelDiameterMeters;
+            final double driveWheelFreeSpeedRps = ModuleConstants.driveWheelFreeSpeedRps;
 
             // Calculate conversion factors
             double drivingFactor = wheelDiameterMeters * Math.PI / drivingMotorReduction;

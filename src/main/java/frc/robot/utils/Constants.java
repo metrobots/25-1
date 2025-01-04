@@ -7,7 +7,7 @@ import edu.wpi.first.math.util.Units;
 
 public final class Constants {
   public static final class DriveConstants {
-    //Driving Parameters - Note that these are the allowed maximum speeds
+    //Driving Parameters - Note that these are the just allowed maximum speeds
     public static final double maxSpeedMetersPerSecond = 4.8; //Adjust based on preference
     public static final double maxAngularSpeed = 2 * Math.PI; //Radians per second
 
