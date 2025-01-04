@@ -28,7 +28,7 @@ public class RobotContainer {
   //NamedCommands.registerCommand("autoBalance", swerve.autoBalanceCommand());
 
   // The driver's controller
-  CommandXboxController primary = new CommandXboxController(OIConstants.driverControllerPort);
+  CommandXboxController primary = new CommandXboxController(OIConstants.primaryPort);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.

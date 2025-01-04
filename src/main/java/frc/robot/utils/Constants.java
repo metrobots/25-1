@@ -62,13 +62,14 @@ public final class Constants {
     public static final double turningMotorReduction = 150.0/7.0; // MK4i turning reduction
     
     //Thrifty encoder constants
-    public static final double encoderResolution = 1.0; // Full rotation
-    public static final double minEncoderFrequency = 100.0; // Hz - for detecting disconnection
-    public static final double maxEncoderFrequency = 1000.0; // Hz - typical working range
+    public static final double encoderResolution = 1.0; //Full rotation
+    public static final double minEncoderFrequency = 100.0; //Hz - for detecting disconnection
+    public static final double maxEncoderFrequency = 1000.0; //Hz - typical working range
   }
 
   public static final class OIConstants {
-    public static final int driverControllerPort = 0;
+    public static final int primaryPort = 0;
+    public static final int secondaryPort = 1; //Do we even need a secondary? Who knowsd
     public static final double driveDeadband = 0.05;
   }
 
