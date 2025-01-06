@@ -136,10 +136,10 @@ public class Drivetrain extends SubsystemBase {
      * translate, or any combination of the two.
      * @param
    */
-  public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
+  public void drive(double xSpeed, double ySpeed, double rotation, boolean fieldRelative) {
     double xSpeedDelivered = xSpeed * DriveConstants.maxSpeedMetersPerSecond;
     double ySpeedDelivered = ySpeed * DriveConstants.maxSpeedMetersPerSecond;
-    double rotDelivered = rot * DriveConstants.maxAngularSpeed;
+    double rotDelivered = rotation * DriveConstants.maxAngularSpeed;
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
