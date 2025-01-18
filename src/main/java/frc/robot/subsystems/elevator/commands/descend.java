@@ -1,5 +1,5 @@
 package frc.robot.subsystems.elevator.commands;
 
-public class descend {
+public class Descend {
     
 }
