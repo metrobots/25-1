@@ -10,22 +10,18 @@ public class Algae {
     private static final int MOTOR_ONE_ID = 0;
 
     private static SparkMax motor1;
+    private static SparkMax motor2;
+    private static SparkMax motor3;
     private static AbsoluteEncoder encoder;
 
-    public Algae() {
-        motor1 = new SparkMax(MOTOR_ONE_ID, MotorType.kBrushless);
-    }
+    public Algae(int topMotorCanID, int bottomMotorCanID, int pivotCanID, double pivotSpeed, double topMotorSpeed, double bottomMotorSpeed) {
+       
+        motor1 = new SparkMax(topMotorCanID, MotorType.kBrushless);
+        motor2 = new SparkMqx(bottomMotorCanID, MotorType.kBrushless);
+        motor3 = new SparkMax(pivotCanID, MotorType.kBrushless);
 
-    /**
-     * ! UNIMPLEMENTED
-     */
-    public static void pickUpAlgae() {
+        motor1.set(topMotorSpeed);
+        motor2.set(bottomMotorSpeed);
+        motor3.set(pivotSpeed);
     }
-
-    /**
-     * ! UNIMPLEMENTED
-     */
-    public static void shootAlgae() {
-
-    }
-}
+} 
