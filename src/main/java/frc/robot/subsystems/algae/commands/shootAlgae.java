@@ -1,15 +1,34 @@
-package frc.robot.subsystems.algae;
+package frc.robot.subsystems.algae.commands;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkMax;
+
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.algae.AlgaeSubsystem;
+
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
-public Class shootAlgae {
+public class ShootAlgae extends Command {
 
-public shootAlgae() {
-    
-    public Algae(1, 2, 3, 4, 5, 6) {
+    /* Placeholder until real one is added. */
+    private AlgaeSubsystem algae;
+
+    @Override
+    public void initialize() {
+    }
+
+    @Override
+    public void execute() {
 
     }
+
+    @Override
+    public void end(boolean interrupted) {
+
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
     }
 }
