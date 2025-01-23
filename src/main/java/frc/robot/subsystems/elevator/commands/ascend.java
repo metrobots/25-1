@@ -15,8 +15,41 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycle;
 
-public class Ascend {
-    private final Elevator elevator = new Elevator (DriveConstants.elevator1CanId, DriveConstants.elevator2CanId, 0.1);
+public class Ascend extends Command {
+    // Positions for each elevator stage.
+    public final double posStage0 = 0;
+    public final double posStage1 = 1;
+    public final double posStage2 = 2;
+    public final double posStage3 = 3;
 
+    public double targetPos;
     
+    public Ascend () {}
+    
+    @Override
+    public initialize () {
+        double initialPos = Elevator.getPos();
+
+        if (initialPos < posStage1) {
+            targetPos = posStage1;
+        } else if (initialPos < posStage2) {
+            targetPos = posStage2;
+        } else {
+            targetPos = posStage3;
+        }
+    }
+
+    @Override
+    Elevator.moveToPos(targetPos);
+    
+    @Override
+    public void end () {
+        Elevator.elevatorSparkMax1.stopMotor();
+        Elevator.elevatorSparkMax2.stopMotor();
+    }
+    
+    @Override
+    public boolean isFinished () {
+        return false;
+    }
 }

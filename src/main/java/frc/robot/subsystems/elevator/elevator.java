@@ -10,6 +10,8 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
+
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycle;
 
@@ -19,21 +21,33 @@ public class Elevator {
 
     private final RelativeEncoder elevatorEncoder;
 
-    public Elevator (int motor1CanId, int motor2CanId, double targetPos) {
+    public Elevator (int motor1CanId, int motor2CanId) {
         elevatorSparkMax1 = new SparkMax(motor1CanId, MotorType.kBrushless);
         elevatorSparkMax2 = new SparkMax(motor2CanId, MotorType.kBrushless);
+
+        elevatorSparkMax2.setInverted(true);
 
         elevatorEncoder = elevatorSparkMax1.getEncoder();
     }
 
-    public double posConvert (double targetPosInches, double encoderValue, double conversionConstant) {
-        double targetPosDegrees = targetPosInches * conversionConstant;
-        double posDifference = targetPosDegrees - encoderValue;
-        return posDifference;
+    public void moveToPos (double targetPosInches) {
+        double rotationsPerInch = 1;
+        // PID Constants YAYYYYYYYYYY
+        double kp = 1;
+        double ki = 1;
+        double kd = 1;
+        
+        double targetPos = targetPosInches / rotationsPerInch;
+
+        ProfiledPIDController elevatorPidController = new ProfiledPIDController(kp, ki, kd, null);
+
+        elevatorSparkMax1.set(elevatorPidController.calculate(elevatorEncoder.getPosition(), targetPos));
+        elevatorSparkMax2.set(elevatorPidController.calculate(elevatorEncoder.getPosition(), targetPos));
     }
 
-    public static void moveToPos () {
-        double realTargetPos = Elevator.posConvert (Elevator.targetPos, elevatorEncoder, 1);
-        
+    public double getPos () {
+        double rotationsPerInch = 1; // Placeholder until we can test
+        double currentPos = elevatorEncoder.getPosition() * rotationsPerInch;
+        return currentPos;
     }
 }
