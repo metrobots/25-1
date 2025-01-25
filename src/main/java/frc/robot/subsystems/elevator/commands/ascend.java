@@ -15,6 +15,8 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycle;
 
+import edu.wpi.first.wpilibj2.command.Command;
+
 public class Ascend extends Command {
     // Positions for each elevator stage.
     public final double posStage0 = 0;
@@ -40,7 +42,9 @@ public class Ascend extends Command {
     }
 
     @Override
-    Elevator.moveToPos(targetPos);
+    public void execute () {
+        Elevator.moveToPos(targetPos);
+    }
     
     @Override
     public void end () {

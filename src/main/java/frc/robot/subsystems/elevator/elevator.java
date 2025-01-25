@@ -21,6 +21,7 @@ public class Elevator {
 
     private final RelativeEncoder elevatorEncoder;
 
+    @SuppressWarnings("deprecation")
     public Elevator (int motor1CanId, int motor2CanId) {
         elevatorSparkMax1 = new SparkMax(motor1CanId, MotorType.kBrushless);
         elevatorSparkMax2 = new SparkMax(motor2CanId, MotorType.kBrushless);
