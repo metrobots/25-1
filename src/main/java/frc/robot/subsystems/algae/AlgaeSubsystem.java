@@ -26,14 +26,11 @@ public class AlgaeSubsystem extends SubsystemBase {
     public AlgaeSubsystem(double pivotSpeed, double topMotorSpeed, double bottomMotorSpeed) {
         motorConfig.inverted(false);
 
-        // TODO: Check if brushless.
         this.topMotor = new SparkMax(DriveConstants.topAlgaeCanId, MotorType.kBrushless);
         this.bottomMotor = new SparkMax(DriveConstants.bottomAlgaeCanId, MotorType.kBrushless);
         this.pivotMotor = new SparkMax(DriveConstants.algaePivotCanId, MotorType.kBrushless);
 
         this.topMotor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        this.bottomMotor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        this.pivotMotor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         this.topMotorController = topMotor.getClosedLoopController();
         this.bottomMotorController = bottomMotor.getClosedLoopController();
