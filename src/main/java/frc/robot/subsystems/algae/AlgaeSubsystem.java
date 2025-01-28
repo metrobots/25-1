@@ -13,46 +13,29 @@ import frc.robot.utils.Constants.DriveConstants;
 
 public class AlgaeSubsystem extends SubsystemBase {
 
-    private final SparkMax topMotor;
-    private final SparkMax bottomMotor;
+    private final SparkMax intakeMotor;
     private final SparkMax pivotMotor;
 
-    private final SparkClosedLoopController topMotorController;
-    private final SparkClosedLoopController bottomMotorController;
-    private final SparkClosedLoopController pivotMotorController;
-
-    private final SparkMaxConfig motorConfig = new SparkMaxConfig();
-
     public AlgaeSubsystem(double pivotSpeed, double topMotorSpeed, double bottomMotorSpeed) {
-        motorConfig.inverted(false);
+        SparkMaxConfig intakeConfig = new SparkMaxConfig();
+        intakeConfig.inverted(false); /* change in case of wrong direction */
 
-        this.topMotor = new SparkMax(DriveConstants.topAlgaeCanId, MotorType.kBrushless);
-        this.bottomMotor = new SparkMax(DriveConstants.bottomAlgaeCanId, MotorType.kBrushless);
+        this.intakeMotor = new SparkMax(DriveConstants.topAlgaeCanId, MotorType.kBrushless);
+        this.intakeMotor.configure(intakeConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
         this.pivotMotor = new SparkMax(DriveConstants.algaePivotCanId, MotorType.kBrushless);
-
-        this.topMotor.configure(motorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
-        this.topMotorController = topMotor.getClosedLoopController();
-        this.bottomMotorController = bottomMotor.getClosedLoopController();
-        this.pivotMotorController = pivotMotor.getClosedLoopController();
-
-        this.topMotor.set(topMotorSpeed);
-        this.bottomMotor.set(bottomMotorSpeed);
-        this.pivotMotor.set(pivotSpeed);
     }
 
-    public void driveOutward(double speed) {
-        this.topMotorController.setReference(speed, ControlType.kVelocity);
-        this.bottomMotorController.setReference(-speed, ControlType.kVelocity);
+    public void driveInward() {
+        this.intakeMotor.set(1.0);
     }
 
-    public void driveInward(double speed) {
-        this.topMotorController.setReference(-speed, ControlType.kVelocity);
-        this.bottomMotorController.setReference(speed, ControlType.kVelocity);
+    public void driveOutward() {
+        this.intakeMotor.set(-1.0);
     }
 
     public void stopDrive() {
-        this.topMotorController.setReference(0, ControlType.kVelocity);
-        this.topMotorController.setReference(0, ControlType.kVelocity);
+        this.intakeMotor.stopMotor();
     }
+
 }
