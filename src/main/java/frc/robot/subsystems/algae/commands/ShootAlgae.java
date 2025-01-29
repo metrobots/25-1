@@ -7,7 +7,6 @@ public class ShootAlgae extends Command {
 
     /* Placeholder until real one is added. */
     private AlgaeSubsystem algaeSubsystem;
-    private final double SPEED = 60.0;
 
     public ShootAlgae(AlgaeSubsystem subsystem) {
         this.algaeSubsystem = subsystem;
@@ -16,12 +15,12 @@ public class ShootAlgae extends Command {
 
     @Override
     public void initialize() {
-        this.algaeSubsystem.stopDrive();
+        algaeSubsystem.stopDrive();
     }
 
     @Override
     public void execute() {
-        algaeSubsystem.driveOutward(SPEED);
+        algaeSubsystem.driveOutward();
     }
 
     @Override
