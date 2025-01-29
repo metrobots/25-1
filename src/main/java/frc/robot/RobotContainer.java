@@ -4,8 +4,20 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.algae.AlgaeSubsystem;
 import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.algae.AlgaeSubsystem;
+import frc.robot.subsystems.algae.commands.PickUpAlgae;
+import frc.robot.subsystems.algae.commands.ShootAlgae;
+import frc.robot.subsystems.coral.Coral;
+import frc.robot.subsystems.coral.commands.Intake;
+import frc.robot.subsystems.coral.commands.Place;
+import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.elevator.commands.Descend;
+import frc.robot.subsystems.elevator.commands.Ascend;
+import frc.robot.subsystems.climb.climb;
 import frc.robot.utils.Constants.OIConstants;
+import frc.robot.utils.Constants.DriveConstants;
 import frc.robot.utils.ControllerKit;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -19,10 +31,13 @@ import com.pathplanner.lib.auto.AutoBuilder;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-    private final SendableChooser<Command> autoChooser;
+  private final SendableChooser<Command> autoChooser;
 
   //The robot's subsystems
   private final Drivetrain drivetrain = new Drivetrain();
+  private final AlgaeSubsystem algae = new AlgaeSubsystem(0, 0, 0);
+  private final Coral coral = new Coral();
+  private final Elevator elevator = new Elevator();
 
   //Make sure to add namedcommands to pathplanner here smthn like this ↓
   //NamedCommands.registerCommand("autoBalance", swerve.autoBalanceCommand());
@@ -38,8 +53,10 @@ public class RobotContainer {
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
-    //Configure the button bindings
-    configureButtonBindings();
+    // //Configure the button bindings
+    // private void configureButtonBindings() {
+      
+    // }
 
     //Configure default commands
     drivetrain.setDefaultCommand(
@@ -53,7 +70,7 @@ public class RobotContainer {
                 true),
                 drivetrain));
   }
-
+  
   /**
    * Use this method to define your button->command mappings. Buttons can be
    * created by
@@ -63,8 +80,17 @@ public class RobotContainer {
    * passing it to a
    * {@link JoystickButton}.
    */
-  private void configureButtonBindings() {}
-
+  private void configureButtonBindings() {
+    // Elevator
+    primary.leftBumper().whileTrue(new Ascend());
+    primary.rightBumper().whileTrue(new Descend());
+    
+    // Combinational Inputs
+    primary.b().and(primary.leftTrigger()).whileTrue(new PickUpAlgae());
+    primary.b().and(primary.rightTrigger()).whileTrue(new ShootAlgae());
+    primary.y().and(primary.leftBumper()).whileTrue(new Intake());
+    primary.y().and(primary.rightTrigger()).whileTrue(new Place());
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

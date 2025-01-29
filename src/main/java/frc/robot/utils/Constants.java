@@ -42,12 +42,11 @@ public final class Constants {
     public static final int bottomAlgaeCanId = 19;
     public static final int algaePivotCanId = 20;
 
-    public static final int topCoralCanId = 21;
-    public static final int bottomCoralCanId = 22;
-    public static final int coralPivotCanId = 23;
+    public static final int lCoralCanId = 21;
+    public static final int rCoralCanId = 22;
     
-    public static final int elevator1CanId = 24;
-    public static final int elevator2CanId = 25;
+    public static final int elevator1CanId = 23;
+    public static final int elevator2CanId = 24;
 
     //Thrifty Encoder DIO ports
     public static final int frontLeftEncoderPort = 0;

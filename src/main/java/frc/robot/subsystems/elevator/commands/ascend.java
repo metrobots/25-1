@@ -29,7 +29,7 @@ public class Ascend extends Command {
     public Ascend () {}
     
     @Override
-    public initialize () {
+    public void initialize () {
         double initialPos = Elevator.getPos();
 
         if (initialPos < posStage1) {
@@ -47,7 +47,7 @@ public class Ascend extends Command {
     }
     
     @Override
-    public void end () {
+    public void end (boolean interrupted) {
         Elevator.elevatorSparkMax1.stopMotor();
         Elevator.elevatorSparkMax2.stopMotor();
     }

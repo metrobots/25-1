@@ -48,7 +48,7 @@ public class Descend extends Command {
 
 
     @Override
-    public void end () {
+    public void end (boolean interrupted) {
         Elevator.elevatorSparkMax1.stopMotor();
         Elevator.elevatorSparkMax2.stopMotor();
     }
