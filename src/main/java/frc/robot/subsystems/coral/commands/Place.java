@@ -18,24 +18,24 @@ import edu.wpi.first.wpilibj.DutyCycle;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class Place extends Command {
-    public Place () {}
+    public Place () {} // Object Constructor
 
     @Override
-    public void initialize () {}
+    public void initialize () {} // Called once at Object Creation
 
     @Override
-    public void execute () {
-        Coral.run(1);
+    public void execute () { // Called as the Command is Run
+        Coral.run(1); // See Coral.java
     }
 
     @Override
-    public void end (boolean interrupted) {
-        Coral.lCoral.stopMotor();
+    public void end (boolean interrupted) { // Called when the Command is interrupted
+        Coral.lCoral.stopMotor(); // Stops the motor
         Coral.rCoral.stopMotor();
     }
 
     @Override
-    public boolean isFinished () {
+    public boolean isFinished () { // Somehow returns true after the Command is interrupted
         return false;
     }
 }

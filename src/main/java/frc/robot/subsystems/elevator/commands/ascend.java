@@ -18,42 +18,44 @@ import edu.wpi.first.wpilibj.DutyCycle;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class Ascend extends Command {
-    // Positions for each elevator stage.
+    // Positions for each elevator stage in inches
     public final double posStage0 = 0;
     public final double posStage1 = 1;
     public final double posStage2 = 2;
     public final double posStage3 = 3;
 
+    // Declares Variable for the target position.
     public double targetPos;
     
-    public Ascend () {}
+    public Ascend () {} // Object Constructor
     
     @Override
-    public void initialize () {
-        double initialPos = Elevator.getPos();
+    public void initialize () { // Called once at Object Creation
+        double initialPos = Elevator.getPos(); // See Elevator.java
 
-        if (initialPos < posStage1) {
-            targetPos = posStage1;
+        // Logic System to determine Target Position
+        if (initialPos < posStage1) { // Checks if Position is below a fixed position (the first stage of the elevator)
+            targetPos = posStage1; // Sets the target position to the point checked above
         } else if (initialPos < posStage2) {
             targetPos = posStage2;
-        } else {
+        } else { // There is no stage 4, therefore anything above stage 2 should be going to stage 3
             targetPos = posStage3;
         }
     }
 
     @Override
-    public void execute () {
-        Elevator.moveToPos(targetPos);
+    public void execute () { // Called as the Command is Run
+        Elevator.moveToPos(targetPos); // See Elevator.java
     }
     
     @Override
-    public void end (boolean interrupted) {
-        Elevator.elevatorSparkMax1.stopMotor();
+    public void end (boolean interrupted) { // Called when the Command is interrupted
+        Elevator.elevatorSparkMax1.stopMotor(); // Stops the Motor
         Elevator.elevatorSparkMax2.stopMotor();
     }
     
     @Override
-    public boolean isFinished () {
+    public boolean isFinished () { // Somehow returns true after the Command is interrupted.
         return false;
     }
 }

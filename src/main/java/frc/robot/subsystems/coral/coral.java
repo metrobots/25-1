@@ -18,16 +18,18 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycle;
 
 public class Coral extends SubsystemBase {
+    // SparkMax Declarations
     public final SparkMax lCoral;
     public final SparkMax rCoral;
 
-    public Coral () {
+    public Coral () { // Object Constructor
+        // SparkMax Definitions
         lCoral = new SparkMax (DriveConstants.lCoralCanId, MotorType.kBrushless);
         rCoral = new SparkMax (DriveConstants.rCoralCanId, MotorType.kBrushless);
     }
 
-    public void run (double speed) {
-        lCoral.set(speed);
-        rCoral.set(-speed);
+    public void run (double speed) { // Runs the motors in a direction at a specified speed
+        lCoral.set(speed); // Sets the speed of the motor to a specified value
+        rCoral.set(-speed); // Negative because motors need to run in opposite directions
     }
 }
