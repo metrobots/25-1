@@ -18,6 +18,9 @@ import edu.wpi.first.wpilibj.DutyCycle;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class Intake extends Command {
+    // Declares Coral object for command
+    private final Coral coral = new Coral();
+    
     public Intake () {} // Object Constructor
 
     @Override
@@ -25,13 +28,13 @@ public class Intake extends Command {
 
     @Override 
     public void execute () { // Called as the Command is Run
-        Coral.run(-1); // See Coral.java
+        coral.run(-1); // See Coral.java
     }
 
     @Override
     public void end (boolean interrupted) { // Called when the Command is interrupted
-        Coral.lCoral.stopMotor(); // Stops the Motor
-        Coral.rCoral.stopMotor();
+        coral.lCoral.stopMotor(); // Stops the Motor
+        coral.rCoral.stopMotor();
     }
 
     @Override

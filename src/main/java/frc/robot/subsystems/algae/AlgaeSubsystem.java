@@ -16,7 +16,7 @@ public class AlgaeSubsystem extends SubsystemBase {
     private final SparkMax intakeMotor;
     private final SparkMax pivotMotor;
 
-    public AlgaeSubsystem(double pivotSpeed, double topMotorSpeed, double bottomMotorSpeed) {
+    public AlgaeSubsystem() {
         SparkMaxConfig intakeConfig = new SparkMaxConfig();
         intakeConfig.inverted(false); /* change in case of wrong direction */
 

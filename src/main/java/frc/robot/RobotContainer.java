@@ -35,7 +35,7 @@ public class RobotContainer {
 
   //The robot's subsystems
   private final Drivetrain drivetrain = new Drivetrain();
-  private final AlgaeSubsystem algae = new AlgaeSubsystem(0, 0, 0);
+  private final AlgaeSubsystem algae = new AlgaeSubsystem();
   private final Coral coral = new Coral();
   private final Elevator elevator = new Elevator();
 
@@ -87,7 +87,7 @@ public class RobotContainer {
     
     // Combinational Inputs
     primary.b().and(primary.leftTrigger()).whileTrue(new PickUpAlgae());
-    primary.b().and(primary.rightTrigger()).whileTrue(new ShootAlgae());
+    primary.b().and(primary.rightTrigger()).whileTrue(new ShootAlgae(algae));
     primary.y().and(primary.leftBumper()).whileTrue(new Intake());
     primary.y().and(primary.rightTrigger()).whileTrue(new Place());
   }

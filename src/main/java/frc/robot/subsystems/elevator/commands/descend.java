@@ -18,6 +18,9 @@ import edu.wpi.first.wpilibj.DutyCycle;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class Descend extends Command {
+    // Declares Elevator object for command.
+    private Elevator elevator = new Elevator();
+    
     // Positions for each elevator stage.
     public final double posStage0 = 0;
     public final double posStage1 = 1;
@@ -30,8 +33,8 @@ public class Descend extends Command {
     public Descend () {} // Object Constructor
 
     @Override
-    public initialize () { // Called once at Object Creation
-        double initialPos = Elevator.getPos(); // See Elevator.java
+    public void initialize () { // Called once at Object Creation
+        double initialPos = elevator.getPos(); // See Elevator.java
 
         // Logic System to determine Target Position
         if (initialPos > posStage2) { // Checks if Position is above a fixed position (the second stage of the elevator)
@@ -45,14 +48,14 @@ public class Descend extends Command {
 
     @Override
     public void execute () { // Called as the Command is Run
-        Elevator.moveToPos(targetPos); // See Elevator.java
+        elevator.moveToPos(targetPos); // See Elevator.java
     }
 
 
     @Override
     public void end (boolean interrupted) { // Called when the Command is Interrupted
-        Elevator.elevatorSparkMax1.stopMotor(); // Stops the Motor
-        Elevator.elevatorSparkMax2.stopMotor();
+        elevator.elevatorSparkMax1.stopMotor(); // Stops the Motor
+        elevator.elevatorSparkMax2.stopMotor();
     }
     
     @Override
