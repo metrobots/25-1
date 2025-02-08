@@ -20,20 +20,21 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.elevator.Elevator;
 
 public class Elevate extends Command {
+    // Declares Elevator object for Command
     private Elevator elevator = new Elevator();
 
     double targetPos;
 
-    public Elevate (double targetPos) {
-        this.targetPos = targetPos;
+    public Elevate (double targetPos) { // Object Constructor
+        this.targetPos = targetPos; // Don't Worry About It
     }
 
     @Override
-    public void initialize () {}
+    public void initialize () {} // Called once at object creation
 
     @Override
-    public void execute () {
-        elevator.moveToPos(this.targetPos);
+    public void execute () { // Called as the Command is run.
+        elevator.moveToPos(targetPos); // 
     }
 
     @Override

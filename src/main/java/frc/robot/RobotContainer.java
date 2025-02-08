@@ -13,6 +13,7 @@ import frc.robot.subsystems.coral.Coral;
 import frc.robot.subsystems.coral.commands.Intake;
 import frc.robot.subsystems.coral.commands.Place;
 import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.elevator.commands.Ascend;
 import frc.robot.subsystems.elevator.commands.Descend;
 import frc.robot.subsystems.elevator.commands.Elevate;
 import frc.robot.subsystems.climb.climb;
@@ -82,18 +83,13 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // Elevator
-    primary.povUp().whileTrue(new Elevate(1)); // Feed Station
-    primary.povLeft().whileTrue(new Elevate(2)); // Reef Level 2
+    primary.povLeft().whileTrue(new Elevate(1)); // Feed Station
+    primary.povUp().whileTrue(new Elevate(2)); // Reef Level 2
     primary.povRight().whileTrue(new Elevate(3)); // Reef Level 3
     primary.povDown().whileTrue(new Elevate(4)); //Reef Level 4
-
-    // Coral
-    primary.leftTrigger().whileTrue(new Intake());
-    primary.rightTrigger().whileTrue(new Place());
-
-    // Algae
-    primary.leftBumper().whileTrue(new PickUpAlgae());
-    primary.rightBumper().whileTrue(new ShootAlgae());
+    
+    primary.rightBumper().whileTrue(new Ascend());
+    primary.leftBumper().whileTrue(new Descend());
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

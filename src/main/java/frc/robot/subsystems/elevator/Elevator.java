@@ -34,15 +34,11 @@ public class Elevator extends SubsystemBase {
         elevatorEncoder = elevatorSparkMax1.getEncoder();
     }
 
-    public void moveToPos (double targetPosInches) { // Moves the Elevator to the desired position.
-        // Conversion between Rotations and Inches
-        double rotationsPerInch = 1; // Conversion Constant
-        double targetPos = targetPosInches / rotationsPerInch; // Conversion Equation
-        
+    public void moveToPos (double targetPos) { // Moves the Elevator to the desired position.
         // PID Controller
         double kp = 1; // Proportional
-        double ki = 1; // Integral
-        double kd = 1; // Derivative
+        double ki = 0; // Integral
+        double kd = 0; // Derivative
 
         ProfiledPIDController elevatorPidController = new ProfiledPIDController(kp, ki, kd, null);
         
@@ -52,8 +48,6 @@ public class Elevator extends SubsystemBase {
     }
 
     public double getPos () { // Returns the current position of the elevator.
-        double rotationsPerInch = 1; // Conversion Constant
-        double currentPos = elevatorEncoder.getPosition() * rotationsPerInch; // Converts the Elevator's Position from Rotations to Inches
-        return currentPos;
+        return elevatorEncoder.getPosition();
     }
 }
