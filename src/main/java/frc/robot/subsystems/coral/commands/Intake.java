@@ -1,8 +1,8 @@
-package frc.robot.subsystems.elevator.commands;
+package frc.robot.subsystems.coral.commands;
 
 import frc.robot.utils.Config;
 import frc.robot.utils.Constants.DriveConstants;
-import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.coral.Coral;
 
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
@@ -17,32 +17,28 @@ import edu.wpi.first.wpilibj.DutyCycle;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class Ascend extends Command {
-    // Declares Elevator object for command
-    public final Elevator elevator = new Elevator();
+public class Intake extends Command {
+    // Declares Coral object for command
+    private final Coral coral = new Coral();
+    
+    public Intake () {} // Object Constructor
 
-    // Declares Variable for the target position.
-    public double adjust = 1;
-    
-    public Ascend () {} // Object Constructor
-    
     @Override
     public void initialize () {} // Called once at Object Creation
 
-    @Override
+    @Override 
     public void execute () { // Called as the Command is Run
-        double currentPos = elevator.getPos(); // See Elevator.java
-        elevator.moveToPos(currentPos + adjust); // See Elevator.java
+        coral.run(-1); // See Coral.java
     }
-    
+
     @Override
     public void end (boolean interrupted) { // Called when the Command is interrupted
-        elevator.elevatorSparkMax1.stopMotor(); // Stops the Motor
-        elevator.elevatorSparkMax2.stopMotor(); 
+        coral.lCoral.stopMotor(); // Stops the Motor
+        coral.rCoral.stopMotor();
     }
-    
+
     @Override
-    public boolean isFinished () { // Somehow returns true after the Command is interrupted.
+    public boolean isFinished () { // Somehow returns true after the Command is Interrupted
         return false;
     }
 }

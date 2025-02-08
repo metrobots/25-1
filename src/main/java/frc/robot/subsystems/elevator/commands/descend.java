@@ -18,43 +18,31 @@ import edu.wpi.first.wpilibj.DutyCycle;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class Descend extends Command {
-    // Positions for each elevator stage.
-    public final double posStage0 = 0;
-    public final double posStage1 = 1;
-    public final double posStage2 = 2;
-    public final double posStage3 = 3;
+    /// Declares Elevator object for command
+    public final Elevator elevator = new Elevator();
 
-    public double targetPos;
+    // Declares Variable for the target position.
+    public double adjust = 1;
     
-    public Descend () {}
+    public Descend () {} // Object Constructor
     
     @Override
-    public initialize () {
-        double initialPos = Elevator.getPos();
-
-        if (initialPos < posStage2) {
-            targetPos = posStage2;
-        } else if (initialPos < posStage1) {
-            targetPos = posStage1;
-        } else {
-            targetPos = posStage0;
-        }
-    }
+    public void initialize () {} // Called once at Object Creation
 
     @Override
-    public void execute () {
-        Elevator.moveToPos(targetPos);
-    }
-
-
-    @Override
-    public void end () {
-        Elevator.elevatorSparkMax1.stopMotor();
-        Elevator.elevatorSparkMax2.stopMotor();
+    public void execute () { // Called as the Command is Run
+        double currentPos = elevator.getPos(); // See Elevator.java
+        elevator.moveToPos(currentPos + adjust); // See Elevator.java
     }
     
     @Override
-    public boolean isFinished () {
+    public void end (boolean interrupted) { // Called when the Command is interrupted
+        elevator.elevatorSparkMax1.stopMotor(); // Stops the Motor
+        elevator.elevatorSparkMax2.stopMotor(); 
+    }
+    
+    @Override
+    public boolean isFinished () { // Somehow returns true after the Command is interrupted.
         return false;
     }
 }

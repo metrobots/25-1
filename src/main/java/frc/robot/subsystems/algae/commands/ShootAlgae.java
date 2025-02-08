@@ -5,13 +5,9 @@ import frc.robot.subsystems.algae.AlgaeSubsystem;
 
 public class ShootAlgae extends Command {
 
-    /* Placeholder until real one is added. */
     private AlgaeSubsystem algaeSubsystem;
 
-    public ShootAlgae(AlgaeSubsystem subsystem) {
-        this.algaeSubsystem = subsystem;
-        addRequirements(this.algaeSubsystem);
-    }
+    public ShootAlgae() {}
 
     @Override
     public void initialize() {
