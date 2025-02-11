@@ -1,8 +1,5 @@
 package frc.robot.subsystems.algae.commands;
 
-import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.algae.AlgaeSubsystem;
 
@@ -13,18 +10,17 @@ public class PickUpAlgae extends Command {
 
     @Override
     public void initialize() {
-        algaeSubsystem.stopDrive();
+        algaeSubsystem.stopIntake();
     }
 
     @Override
     public void execute() {
-        // TODO: implement pivot motor (I think?).
-        algaeSubsystem.driveInward();
+        algaeSubsystem.driveIntake(1.0);
     }
 
     @Override
     public void end(boolean interrupted) {
-        algaeSubsystem.stopDrive();
+        algaeSubsystem.stopIntake();
     }
 
     @Override

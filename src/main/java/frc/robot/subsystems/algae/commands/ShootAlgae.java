@@ -7,21 +7,22 @@ public class ShootAlgae extends Command {
 
     private AlgaeSubsystem algaeSubsystem;
 
-    public ShootAlgae() {}
+    public ShootAlgae() {
+    }
 
     @Override
     public void initialize() {
-        algaeSubsystem.stopDrive();
+        algaeSubsystem.stopIntake();
     }
 
     @Override
     public void execute() {
-        algaeSubsystem.driveOutward();
+        algaeSubsystem.driveIntake(-1.0);
     }
 
     @Override
     public void end(boolean interrupted) {
-        algaeSubsystem.stopDrive();
+        algaeSubsystem.stopIntake();
     }
 
     @Override
