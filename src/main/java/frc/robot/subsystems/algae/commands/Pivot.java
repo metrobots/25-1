@@ -15,17 +15,12 @@ public class Pivot extends Command {
         algae.stopPivot();
     }
 
+    /**
+     * @brief Currently moves the arm forward at a constant speed. Doesn't ever come
+     *        back up.
+     */
     @Override
     public void execute() {
-        // TODO: Get clarification on what the purpose of pivot is.
-        // /*
-        // * I'm not sure if this will work, but implementing a 'switch case' might
-        // emable
-        // * users to freely
-        // * move the pivot motor to any angle?
-        // */
-
-        /* Hope this is the right direction. */
         this.algae.drivePivot(0.5);
     }
 

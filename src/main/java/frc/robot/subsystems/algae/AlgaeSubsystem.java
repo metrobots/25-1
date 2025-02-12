@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.RelativeEncoder;
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
@@ -14,7 +14,7 @@ public class AlgaeSubsystem extends SubsystemBase {
 
     private final SparkMax intakeMotor;
     private final SparkMax pivotMotor;
-    private final RelativeEncoder pivotEncoder;
+    private final AbsoluteEncoder pivotEncoder;
 
     public AlgaeSubsystem() {
         SparkMaxConfig intakeConfig = new SparkMaxConfig();
@@ -22,7 +22,7 @@ public class AlgaeSubsystem extends SubsystemBase {
         this.intakeMotor = new SparkMax(DriveConstants.topAlgaeCanId, MotorType.kBrushless);
         this.intakeMotor.configure(intakeConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         this.pivotMotor = new SparkMax(DriveConstants.algaePivotCanId, MotorType.kBrushless);
-        this.pivotEncoder = pivotMotor.getAlternateEncoder();
+        this.pivotEncoder = pivotMotor.getAbsoluteEncoder();
     }
 
     public void driveIntake(double speed) {
@@ -41,11 +41,7 @@ public class AlgaeSubsystem extends SubsystemBase {
         this.pivotMotor.stopMotor();
     }
 
-    public void resetPosition() {
-        this.pivotEncoder.setPosition(0);
-    }
-
-    public double getPosition() {
+    public double getPivotPosition() {
         return this.pivotEncoder.getPosition();
     }
 
