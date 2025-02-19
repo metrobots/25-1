@@ -19,7 +19,7 @@ public class ShootAlgae extends Command {
     @Override
     public void execute() {
         algaeSubsystem.driveIntake(-1.0);
-        algaeSubsystem.setCurrentState(AlgaeState.Shoot);
+        algaeSubsystem.setCurrentState(AlgaeState.SHOOT);
     }
 
     @Override

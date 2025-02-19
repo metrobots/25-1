@@ -17,11 +17,13 @@ public class AlgaeSubsystem extends SubsystemBase {
     private AlgaeState currentState;
 
     public enum AlgaeState {
-        PickUp,
-        Shoot,
+        PICK_UP,
+        SHOOT,
+        NONE,
     }
 
     public AlgaeSubsystem() {
+        currentState = AlgaeState.NONE;
         SparkMaxConfig intakeConfig = new SparkMaxConfig();
         intakeConfig.inverted(false); /* change in case of wrong direction */
         this.intakeMotor = new SparkMax(DriveConstants.topAlgaeCanId, MotorType.kBrushless);
@@ -57,5 +59,4 @@ public class AlgaeSubsystem extends SubsystemBase {
     public double getPivotPosition() {
         return this.pivotEncoder.getPosition();
     }
-
 }

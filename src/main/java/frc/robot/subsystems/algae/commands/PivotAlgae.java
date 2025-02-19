@@ -20,15 +20,14 @@ public class PivotAlgae extends Command {
     @Override
     public void execute() {
         switch (algae.getCurrentState()) {
-            case PickUp:
+            case PICK_UP:
                 pickUp();
                 break;
-            case Shoot:
+            case SHOOT:
                 shoot();
                 break;
             default:
                 break;
-
         }
     }
 
@@ -46,10 +45,10 @@ public class PivotAlgae extends Command {
         algae.stopIntake();
         algae.stopPivot();
 
-        if (algae.getCurrentState() == AlgaeState.PickUp) {
-            algae.setCurrentState(AlgaeState.Shoot);
-        } else if (algae.getCurrentState() == AlgaeState.Shoot) {
-            algae.setCurrentState(AlgaeState.PickUp);
+        if (algae.getCurrentState() == AlgaeState.PICK_UP) {
+            algae.setCurrentState(AlgaeState.SHOOT);
+        } else if (algae.getCurrentState() == AlgaeState.SHOOT) {
+            algae.setCurrentState(AlgaeState.PICK_UP);
         }
     }
 }
