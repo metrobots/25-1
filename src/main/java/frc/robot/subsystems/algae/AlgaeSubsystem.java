@@ -11,10 +11,15 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import frc.robot.utils.Constants.DriveConstants;
 
 public class AlgaeSubsystem extends SubsystemBase {
-
     private final SparkMax intakeMotor;
     private final SparkMax pivotMotor;
     private final AbsoluteEncoder pivotEncoder;
+    private AlgaeState currentState;
+
+    public enum AlgaeState {
+        PickUp,
+        Shoot,
+    }
 
     public AlgaeSubsystem() {
         SparkMaxConfig intakeConfig = new SparkMaxConfig();
@@ -23,6 +28,14 @@ public class AlgaeSubsystem extends SubsystemBase {
         this.intakeMotor.configure(intakeConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         this.pivotMotor = new SparkMax(DriveConstants.algaePivotCanId, MotorType.kBrushless);
         this.pivotEncoder = pivotMotor.getAbsoluteEncoder();
+    }
+
+    public void setCurrentState(AlgaeState currentState) {
+        this.currentState = currentState;
+    }
+
+    public AlgaeState getCurrentState() {
+        return currentState;
     }
 
     public void driveIntake(double speed) {

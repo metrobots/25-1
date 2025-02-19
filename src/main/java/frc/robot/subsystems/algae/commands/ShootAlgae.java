@@ -2,6 +2,7 @@ package frc.robot.subsystems.algae.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.algae.AlgaeSubsystem;
+import frc.robot.subsystems.algae.AlgaeSubsystem.AlgaeState;
 
 public class ShootAlgae extends Command {
 
@@ -18,6 +19,7 @@ public class ShootAlgae extends Command {
     @Override
     public void execute() {
         algaeSubsystem.driveIntake(-1.0);
+        algaeSubsystem.setCurrentState(AlgaeState.Shoot);
     }
 
     @Override
