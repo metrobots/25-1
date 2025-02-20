@@ -17,12 +17,15 @@ public class AlgaeSubsystem extends SubsystemBase {
     private AlgaeState currentState;
 
     public enum AlgaeState {
+        IDLE,
+        MOVE_DOWN,
         PICK_UP,
-        PREP_SHOOT,
+        MOVE_UP,
+        SHOOT,
     }
 
     public AlgaeSubsystem() {
-        currentState = AlgaeState.PICK_UP;
+        currentState = AlgaeState.IDLE;
         SparkMaxConfig intakeConfig = new SparkMaxConfig();
         intakeConfig.inverted(false); /* change in case of wrong direction */
         this.intakeMotor = new SparkMax(DriveConstants.topAlgaeCanId, MotorType.kBrushless);
@@ -57,5 +60,27 @@ public class AlgaeSubsystem extends SubsystemBase {
 
     public double getPivotPosition() {
         return this.pivotEncoder.getPosition();
+    }
+
+    @Override
+    public void periodic() {
+        switch (this.getCurrentState()) {
+            case IDLE:
+                break;
+            case MOVE_DOWN:
+                /* Should probably add a stop when this hits the lowest point */
+                this.drivePivot(0.5);
+                break;
+            case MOVE_UP:
+                /* Should probably add a stop when this hits the lowest point */
+                this.drivePivot(-0.5);
+                break;
+            case PICK_UP:
+                this.driveIntake(0.5);
+                break;
+            case SHOOT:
+                this.driveIntake(-0.5);
+                break;
+        }
     }
 }

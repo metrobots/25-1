@@ -4,6 +4,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.algae.AlgaeSubsystem;
 import frc.robot.subsystems.algae.AlgaeSubsystem.AlgaeState;
 
+/**
+ * This functionality has been moved to AlgaeSubsystem periodic() method.
+ */
 public class PivotAlgae extends Command {
     private final AlgaeSubsystem algae;
 
@@ -25,12 +28,6 @@ public class PivotAlgae extends Command {
     @Override
     public void execute() {
         switch (algae.getCurrentState()) {
-            case PICK_UP:
-                pickUp();
-                break;
-            case PREP_SHOOT:
-                shoot();
-                break;
             default:
                 break;
         }
@@ -56,11 +53,5 @@ public class PivotAlgae extends Command {
     public void end(boolean interrupted) {
         algae.stopIntake();
         algae.stopPivot();
-
-        if (algae.getCurrentState() == AlgaeState.PICK_UP) {
-            algae.setCurrentState(AlgaeState.PREP_SHOOT);
-        } else if (algae.getCurrentState() == AlgaeState.PREP_SHOOT) {
-            algae.setCurrentState(AlgaeState.PICK_UP);
-        }
     }
 }
