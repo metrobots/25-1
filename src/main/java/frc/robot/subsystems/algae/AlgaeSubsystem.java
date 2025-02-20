@@ -18,12 +18,11 @@ public class AlgaeSubsystem extends SubsystemBase {
 
     public enum AlgaeState {
         PICK_UP,
-        SHOOT,
-        NONE,
+        PREP_SHOOT,
     }
 
     public AlgaeSubsystem() {
-        currentState = AlgaeState.NONE;
+        currentState = AlgaeState.PICK_UP;
         SparkMaxConfig intakeConfig = new SparkMaxConfig();
         intakeConfig.inverted(false); /* change in case of wrong direction */
         this.intakeMotor = new SparkMax(DriveConstants.topAlgaeCanId, MotorType.kBrushless);
