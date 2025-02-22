@@ -7,10 +7,10 @@ import frc.robot.subsystems.algae.AlgaeSubsystem.AlgaeState;
 /**
  * This functionality has been moved to AlgaeSubsystem periodic() method.
  */
-public class PivotAlgae extends Command {
+public class Pivot extends Command {
     private final AlgaeSubsystem algae;
 
-    public PivotAlgae(AlgaeSubsystem algae) {
+    public Pivot(AlgaeSubsystem algae) {
         this.algae = algae;
     }
 

@@ -12,15 +12,11 @@ import frc.robot.utils.Constants.DriveConstants;
 
 public class AlgaeSubsystem extends SubsystemBase {
     private final SparkMax intakeMotor;
-    private final SparkMax pivotMotor;
-    private final AbsoluteEncoder pivotEncoder;
     private AlgaeState currentState;
 
     public enum AlgaeState {
         IDLE,
-        MOVE_DOWN,
         PICK_UP,
-        MOVE_UP,
         SHOOT,
     }
 
@@ -30,8 +26,6 @@ public class AlgaeSubsystem extends SubsystemBase {
         intakeConfig.inverted(false); /* change in case of wrong direction */
         this.intakeMotor = new SparkMax(DriveConstants.topAlgaeCanId, MotorType.kBrushless);
         this.intakeMotor.configure(intakeConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        this.pivotMotor = new SparkMax(DriveConstants.algaePivotCanId, MotorType.kBrushless);
-        this.pivotEncoder = pivotMotor.getAbsoluteEncoder();
     }
 
     public void setCurrentState(AlgaeState currentState) {
@@ -46,34 +40,14 @@ public class AlgaeSubsystem extends SubsystemBase {
         this.intakeMotor.set(speed);
     }
 
-    public void drivePivot(double speed) {
-        this.pivotMotor.set(speed);
-    }
-
     public void stopIntake() {
         this.intakeMotor.stopMotor();
-    }
-
-    public void stopPivot() {
-        this.pivotMotor.stopMotor();
-    }
-
-    public double getPivotPosition() {
-        return this.pivotEncoder.getPosition();
     }
 
     @Override
     public void periodic() {
         switch (this.getCurrentState()) {
             case IDLE:
-                break;
-            case MOVE_DOWN:
-                /* Should probably add a stop when this hits the lowest point */
-                this.drivePivot(0.5);
-                break;
-            case MOVE_UP:
-                /* Should probably add a stop when this hits the lowest point */
-                this.drivePivot(-0.5);
                 break;
             case PICK_UP:
                 this.driveIntake(0.5);
