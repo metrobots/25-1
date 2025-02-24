@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.algae.AlgaeSubsystem;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.algae.AlgaeSubsystem;
-import frc.robot.subsystems.algae.commands.PickUpAlgae;
 import frc.robot.subsystems.algae.commands.ShootAlgae;
 import frc.robot.subsystems.coral.Coral;
 import frc.robot.subsystems.coral.commands.Intake;
@@ -34,16 +33,16 @@ import com.pathplanner.lib.auto.AutoBuilder;
 public class RobotContainer {
   private final SendableChooser<Command> autoChooser;
 
-  //The robot's subsystems
+  // The robot's subsystems
   private final Drivetrain drivetrain = new Drivetrain();
   private final AlgaeSubsystem algae = new AlgaeSubsystem();
   private final Coral coral = new Coral();
   private final Elevator elevator = new Elevator();
 
-  //Make sure to add namedcommands to pathplanner here smthn like this ↓
-  //NamedCommands.registerCommand("autoBalance", swerve.autoBalanceCommand());
+  // Make sure to add namedcommands to pathplanner here smthn like this ↓
+  // NamedCommands.registerCommand("autoBalance", swerve.autoBalanceCommand());
 
-  //The driver's controller
+  // The driver's controller
   ControllerKit primary = new ControllerKit(OIConstants.primaryPort);
 
   /**
@@ -56,22 +55,22 @@ public class RobotContainer {
 
     // //Configure the button bindings
     // private void configureButtonBindings() {
-      
+
     // }
 
-    //Configure default commands
+    // Configure default commands
     drivetrain.setDefaultCommand(
-        //The left stick controls translation of the robot.
-        //Turning is controlled by the X axis of the right stick.
+        // The left stick controls translation of the robot.
+        // Turning is controlled by the X axis of the right stick.
         new RunCommand(
             () -> drivetrain.drive(
                 -MathUtil.applyDeadband(primary.getLeftY(), OIConstants.driveDeadband),
                 -MathUtil.applyDeadband(primary.getLeftX(), OIConstants.driveDeadband),
                 -MathUtil.applyDeadband(primary.getRightX(), OIConstants.driveDeadband),
                 true),
-                drivetrain));
+            drivetrain));
   }
-  
+
   /**
    * Use this method to define your button->command mappings. Buttons can be
    * created by
@@ -86,11 +85,12 @@ public class RobotContainer {
     primary.povLeft().whileTrue(new Elevate(1)); // Feed Station
     primary.povUp().whileTrue(new Elevate(2)); // Reef Level 2
     primary.povRight().whileTrue(new Elevate(3)); // Reef Level 3
-    primary.povDown().whileTrue(new Elevate(4)); //Reef Level 4
-    
+    primary.povDown().whileTrue(new Elevate(4)); // Reef Level 4
+
     primary.rightBumper().whileTrue(new Ascend());
     primary.leftBumper().whileTrue(new Descend());
   }
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
