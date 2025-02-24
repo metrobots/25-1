@@ -80,8 +80,6 @@ public class Elevator extends SubsystemBase {
 
     @Override
     public void periodic () {
-        manual = false;
-        
         if (currentState == ElevatorState.ERROR || currentState == ElevatorState.IDLE) {
             elevatorSparkMax1.stopMotor();
         }
@@ -124,9 +122,9 @@ public class Elevator extends SubsystemBase {
         ProfiledPIDController elevatorPidController = new ProfiledPIDController(kp, ki, kd, null);
         
         // Uses above PID Controller to Run Motors so Elevator Ends up in the Desired Position
-        elevatorSparkMax1.set(elevatorPidController.calculate(elevatorEncoder.getPosition()));
+        elevatorSparkMax1.set(elevatorPidController.calculate(elevatorEncoder.getPosition(), targetPos));
 
-        if (Math.abs(targetPos-this.getPos()) < 0.5) {
+        if (Math.abs(targetPos - this.getPos()) < 0.5) {
             currentState = ElevatorState.HOLD_POS;
         }
     }
@@ -139,7 +137,7 @@ public class Elevator extends SubsystemBase {
         
         ProfiledPIDController elevatorPidController = new ProfiledPIDController(kp, ki, kd, null);
         
-        elevatorSparkMax1.set(elevatorPidController.calculate(elevatorEncoder.getVelocity()));
+        elevatorSparkMax1.set(elevatorPidController.calculate(elevatorEncoder.getVelocity(), speed));
     }
 
     public double getPos () { // Returns the current position of the elevator.
