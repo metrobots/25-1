@@ -1,12 +1,10 @@
 package frc.robot.subsystems.algae.commands;
 
+import main.java.frc.robot.subsystems.pivot.PivotSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.algae.AlgaeSubsystem;
-import frc.robot.subsystems.algae.AlgaeSubsystem.AlgaeState;
+import frc.robot.subsystems.pivot.commands.SetPivotState;
 
-/**
- * This functionality has been moved to AlgaeSubsystem periodic() method.
- */
 public class Pivot extends Command {
     private final AlgaeSubsystem algae;
 

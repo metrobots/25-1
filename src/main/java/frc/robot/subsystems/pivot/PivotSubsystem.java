@@ -20,7 +20,9 @@ public class PivotSubsystem extends SubsystemBase{
     public enum PivotState {
         IDLE,
         MOVE_DOWN,
-        MOVE_UP, 
+        MOVE_UP,
+        PICK_UP,
+        SHOOT,
     }
 
     public PivotSubsystem() {
@@ -60,6 +62,12 @@ public class PivotSubsystem extends SubsystemBase{
             case MOVE_UP:
                 /* Should probably add a stop when this hits the lowest point */
                 this.drivePivot(-0.5);
+                break;
+            case PICK_UP:
+                this.driveIntake(0.5);
+                break;
+            case SHOOT:
+                this.driveIntake(-0.5);
                 break;
         }
     }
