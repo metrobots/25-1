@@ -30,6 +30,7 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
+    CommandScheduler.getInstance().registerSubsystem(new AlgaeSubsystem());
   }
 
   /**
@@ -51,7 +52,6 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods. This must be called from the
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
-    CommandScheduler.getInstance().registerSubsystem(new AlgaeSubsystem());
     CommandScheduler.getInstance().run();
   }
 
