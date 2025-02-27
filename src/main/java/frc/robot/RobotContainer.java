@@ -3,6 +3,7 @@ package frc.robot;
 import static edu.wpi.first.wpilibj2.command.Commands.runOnce;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.ADXL345_I2C.AllAxes;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.algae.AlgaeSubsystem;
@@ -91,12 +92,8 @@ public class RobotContainer {
         primary.rightTrigger().onFalse(runOnce(() -> algae.setCurrentState(AlgaeState.IDLE)));
 
         // a is for (pivot for the) a(lgae subsystem).
-        primary.a().whileTrue(runOnce(() -> {
-            if (algae.getPreviousPositionState() == AlgaeState.MOVE_DOWN) {
-                algae.setCurrentState(AlgaeState.MOVE_UP);
-            } else if (algae.getPreviousPositionState() == AlgaeState.MOVE_UP) {
-                algae.setCurrentState(AlgaeState.MOVE_DOWN);
-            }
+        primary.a().onTrue(runOnce(() -> {
+            // TODO: this
         }));
         primary.a().onFalse(runOnce(() -> algae.setCurrentState(AlgaeState.IDLE)));
     }

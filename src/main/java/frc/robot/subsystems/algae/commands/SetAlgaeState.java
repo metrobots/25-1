@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.algae.AlgaeSubsystem;
 import frc.robot.subsystems.algae.AlgaeSubsystem.AlgaeState;
 
+@Deprecated
 public class SetAlgaeState extends Command {
     private final AlgaeSubsystem algae = new AlgaeSubsystem();
 
