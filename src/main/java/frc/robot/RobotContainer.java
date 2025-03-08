@@ -84,7 +84,7 @@ public class RobotContainer {
         // primary.rightBumper().whileTrue(new Ascend());
         // primary.leftBumper().whileTrue(new Descend());
 
-        /// Algae
+        /// Algae (switch from using runOnce to named algae commands).
         primary.leftTrigger().whileTrue(runOnce(() -> algae.setCurrentState(AlgaeState.PICK_UP)));
         primary.leftTrigger().onFalse(runOnce(() -> algae.setCurrentState(AlgaeState.IDLE)));
 

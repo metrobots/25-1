@@ -49,8 +49,8 @@ public class AlgaeSubsystem extends SubsystemBase {
     }
 
     public void driveIntake(double speed) {
-        final double MAX_RPM = 8912; // randomly chosen number
-        double targetRPM = 3600; // randomly chosen number
+        final double MAX_RPM = 120; // randomly chosen number
+        double targetRPM = 60; // randomly chosen number
         double targetSpeed = this.pidController.calculate(this.intakeEncoder.getVelocity(), targetRPM);
         targetSpeed = targetSpeed / (MAX_RPM + pidController.getVelocityError());
         this.intakeMotor.set(targetSpeed);
@@ -73,6 +73,7 @@ public class AlgaeSubsystem extends SubsystemBase {
                 this.driveIntake(1);
                 break;
             case ERROR:
+                /* In case of emergency, just stop. */
                 this.intakeMotor.stopMotor();
                 break;
         }
