@@ -29,4 +29,9 @@ public class AlgaeError extends Command {
     public void end(boolean interrupted) {
         /* Do nothing, since algae state is already set in initialize(). */
     }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }
