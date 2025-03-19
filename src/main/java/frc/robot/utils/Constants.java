@@ -48,6 +48,8 @@ public final class Constants {
     public static final int elevator1CanId = 23;
     public static final int elevator2CanId = 24;
 
+    public static final int algaeRemoveCanId = 25;
+
     //Thrifty Encoder DIO ports
     public static final int frontLeftEncoderPort = 0;
     public static final int frontRightEncoderPort = 1;
